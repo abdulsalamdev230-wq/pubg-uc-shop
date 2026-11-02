@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC Store Admin Dashboard</title>
+    <!-- Google Fonts (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #07080a;
+            --bg-secondary: #0f1115;
+            --bg-tertiary: #171a21;
+            --accent-green: #00ff66;
+            --accent-yellow: #ffcc00;
+            --accent-red: #ff3333;
+            --text-white: #ffffff;
+            --text-muted: #8e959e;
+            --border-color: rgba(255, 255, 255, 0.06);
+            --font-family: 'Poppins', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-white);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* Header Style */
+        .admin-header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            color: var(--accent-green);
+        }
+
+        .badge-admin {
+            background: rgba(0, 255, 102, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            padding: 2px 10px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            color: var(--text-white);
+            border-color: var(--text-white);
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Metrics grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .metric-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .blue-icon { background: rgba(0, 191, 255, 0.1); color: #00bfff; }
+        .yellow-icon { background: rgba(255, 204, 0, 0.1); color: var(--accent-yellow); }
+        .green-icon { background: rgba(0, 255, 102, 0.1); color: var(--accent-green); }
+        .red-icon { background: rgba(255, 51, 51, 0.1); color: var(--accent-red); }
+
+        .metric-info h3 {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        /* Filters and Controls */
+        .controls-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+            min-width: 250px;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px 10px 40px;
+            color: var(--text-white);
+            font-family: var(--font-family);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-green);
+        }
+
+        .filter-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .select-filter {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: var(--text-white);
+            font-family: var(--font-family);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .refresh-btn {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .refresh-btn:hover {
+            background-color: var(--border-color);
+            border-color: var(--text-muted);
+        }
+
+        /* Orders Table Card */
+        .table-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table-header-title {
+            padding: 24px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .orders-table th {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 16px 24px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .orders-table td {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .orders-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .orders-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        .order-id {
+            font-family: monospace;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .player-id-val {
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .uc-amount-val {
+            font-weight: 700;
+            color: var(--accent-yellow);
+        }
+
+        .price-val {
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background-color: rgba(255, 204, 0, 0.1);
+            color: var(--accent-yellow);
+            border: 1px solid rgba(255, 204, 0, 0.2);
+        }
+
+        .status-completed {
+            background-color: rgba(0, 255, 102, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+        }
+
+        .status-cancelled {
+            background-color: rgba(255, 51, 51, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(255, 51, 51, 0.2);
+        }
+
+        /* Action buttons in table */
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .action-btn.complete {
+            background-color: rgba(0, 255, 102, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+        }
+
+        .action-btn.complete:hover:not(:disabled) {
+            background-color: var(--accent-green);
+            color: var(--bg-primary);
+        }
+
+        .action-btn.cancel {
+            background-color: rgba(255, 51, 51, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(255, 51, 51, 0.2);
+        }
+
+        .action-btn.cancel:hover:not(:disabled) {
+            background-color: var(--accent-red);
+            color: var(--text-white);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Empty state */
+        .empty-state {
+            padding: 60px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        /* Loading spinner */
+        .loading-overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px;
+            color: var(--text-muted);
+        }
+
+        .spinner {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile adjustments */
+        @media screen and (max-width: 768px) {
+            .controls-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-wrapper {
+                max-width: 100%;
+            }
+            .filter-options {
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Simple Password Authentication Check before UI rendering -->
+    <script>
+        // Set your administrator password here
+        const ADMIN_PASSWORD = "admin"; 
+        
+        let authenticated = localStorage.getItem("uc_store_admin_auth") === "true";
+        if (!authenticated) {
+            const password = prompt("Enter Admin Access Password:");
+            if (password === ADMIN_PASSWORD) {
+                localStorage.setItem("uc_store_admin_auth", "true");
+            } else {
+                alert("Access Denied! Incorrect Password.");
+                window.location.href = "/";
+            }
+        }
+    </script>
+
+    <!-- Admin Top Header -->
+    <header class="admin-header">
+        <div class="header-container">
+            <div class="admin-logo">
+                <i class="fa-solid fa-gamepad logo-icon"></i>
+                <span>UC Store</span>
+                <span class="badge-admin">Admin Dashboard</span>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+
+        <!-- Metrics Display Grid -->
+        <div class="metrics-grid">
+            <!-- Total Orders -->
+            <div class="metric-card">
+                <div class="metric-icon-wrapper blue-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Total Orders</h3>
+                    <div class="metric-value" id="stat-total-orders">-</div>
+                </div>
+            </div>
+
+            <!-- Pending Orders -->
+            <div class="metric-card">
+                <div class="metric-icon-wrapper yellow-icon">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Pending Orders</h3>
+                    <div class="metric-value" id="stat-pending-orders">-</div>
+                </div>
+            </div>
+
+            <!-- Completed Orders -->
+            <div class="metric-card">
+                <div class="metric-icon-wrapper green-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Completed Orders</h3>
+                    <div class="metric-value" id="stat-completed-orders">-</div>
+                </div>
+            </div>
+
+            <!-- Revenue -->
+            <div class="metric-card">
+                <div class="metric-icon-wrapper red-icon">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Total Revenue</h3>
+                    <div class="metric-value" id="stat-total-revenue">Rs. 0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Controls Card -->
+        <div class="controls-card">
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" class="search-input" id="search-player-id" placeholder="Search by PUBG Player ID...">
+            </div>
+
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label for="filter-status" class="filter-label">Status: </label>
+                    <select class="select-filter" id="filter-status">
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <button class="refresh-btn" id="refresh-btn">
+                    <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <!-- Orders Table Card -->
+        <div class="table-card">
+            <div class="table-header-title">Incoming Orders Queue</div>
+
+            <div class="table-responsive">
+                <!-- Loader State -->
+                <div class="loading-overlay" id="loading-state">
+                    <i class="fa-solid fa-circle-notch spinner"></i>
+                    <p>Loading database entries...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <i class="fa-regular fa-folder-open empty-icon"></i>
+                    <p>No orders found matching the filter criteria.</p>
+                </div>
+
+                <table class="orders-table" id="orders-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Timestamp</th>
+                            <th>Player ID</th>
+                            <th>UC Amount</th>
+                            <th>Price</th>
+                            <th>Payment Method</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Admin dashboard controllers script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const logoutBtn = document.getElementById("logout-btn");
+            const refreshBtn = document.getElementById("refresh-btn");
+            const searchInput = document.getElementById("search-player-id");
+            const statusFilter = document.getElementById("filter-status");
+
+            // Stats elements
+            const statTotal = document.getElementById("stat-total-orders");
+            const statPending = document.getElementById("stat-pending-orders");
+            const statCompleted = document.getElementById("stat-completed-orders");
+            const statRevenue = document.getElementById("stat-total-revenue");
+
+            // Table states
+            const ordersTable = document.getElementById("orders-table");
+            const ordersTbody = document.getElementById("orders-tbody");
+            const loadingState = document.getElementById("loading-state");
+            const emptyState = document.getElementById("empty-state");
+
+            let ordersData = [];
+
+            // -------------------------------------------------------------
+            // Authentication Handling
+            // -------------------------------------------------------------
+            logoutBtn.addEventListener("click", () => {
+                localStorage.removeItem("uc_store_admin_auth");
+                window.location.href = "/";
+            });
+
+            // -------------------------------------------------------------
+            // Data Loading & API Calls
+            // -------------------------------------------------------------
+            const fetchDashboardData = () => {
+                showLoading();
+                
+                // 1. Fetch Stats metrics
+                fetch("/api/stats")
+                    .then(res => res.json())
+                    .then(stats => {
+                        statTotal.textContent = stats.totalOrders;
+                        statPending.textContent = stats.pendingOrders;
+                        statCompleted.textContent = stats.completedOrders;
+                        statRevenue.textContent = `Rs. ${parseInt(stats.totalRevenue).toLocaleString()}`;
+                    })
+                    .catch(err => console.error("Error loading stats:", err));
+
+                // 2. Fetch Orders Queue
+                fetch("/api/orders")
+                    .then(res => res.json())
+                    .then(data => {
+                        ordersData = data;
+                        renderOrders();
+                    })
+                    .catch(err => {
+                        console.error("Error loading orders:", err);
+                        showEmpty();
+                    });
+            };
+
+            // Update order status API call
+            window.updateStatus = (orderId, newStatus) => {
+                const confirmChange = confirm(`Are you sure you want to mark Order #${orderId} as ${newStatus}?`);
+                if (!confirmChange) return;
+
+                fetch(`/api/orders/${orderId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        // Reload dashboard numbers & queue
+                        fetchDashboardData();
+                    } else {
+                        alert("Failed to update status: " + res.error);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error updating order status:", err);
+                    alert("Network error updating status.");
+                });
+            };
+
+            // -------------------------------------------------------------
+            // Render UI helper functions
+            // -------------------------------------------------------------
+            const renderOrders = () => {
+                const searchQuery = searchInput.value.toLowerCase().trim();
+                const selectedStatus = statusFilter.value;
+
+                // Filter ordersData based on inputs
+                const filteredOrders = ordersData.filter(order => {
+                    const matchesSearch = order.player_id.toLowerCase().includes(searchQuery);
+                    const matchesStatus = (selectedStatus === "All" || order.status === selectedStatus);
+                    return matchesSearch && matchesStatus;
+                });
+
+                ordersTbody.innerHTML = "";
+
+                if (filteredOrders.length === 0) {
+                    showEmpty();
+                    return;
+                }
+
+                filteredOrders.forEach(order => {
+                    const row = document.createElement("tr");
+
+                    // Formatted Timestamp
+                    const formattedDate = new Date(order.created_at).toLocaleString();
+
+                    // Status Badge Class
+                    let badgeClass = "status-pending";
+                    if (order.status === "Completed") badgeClass = "status-completed";
+                    if (order.status === "Cancelled") badgeClass = "status-cancelled";
+
+                    // Disabled Actions check
+                    const isCompleted = order.status === "Completed";
+                    const isCancelled = order.status === "Cancelled";
+
+                    row.innerHTML = `
+                        <td class="order-id">#${order.id}</td>
+                        <td>${formattedDate}</td>
+                        <td class="player-id-val">${order.player_id}</td>
+                        <td class="uc-amount-val">${order.uc_amount} UC</td>
+                        <td class="price-val">Rs. ${order.price.toLocaleString()}</td>
+                        <td>${order.payment_method}</td>
+                        <td>
+                            <span class="status-badge ${badgeClass}">${order.status}</span>
+                        </td>
+                        <td class="actions-cell">
+                            <button class="action-btn complete" title="Mark as Completed" onclick="updateStatus(${order.id}, 'Completed')" ${isCompleted ? 'disabled' : ''}>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                            <button class="action-btn cancel" title="Mark as Cancelled" onclick="updateStatus(${order.id}, 'Cancelled')" ${isCancelled ? 'disabled' : ''}>
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </td>
+                    `;
+                    ordersTbody.appendChild(row);
+                });
+
+                showTable();
+            };
+
+            // Visually toggle states
+            const showLoading = () => {
+                loadingState.style.display = "flex";
+                ordersTable.style.display = "none";
+                emptyState.style.display = "none";
+            };
+
+            const showEmpty = () => {
+                loadingState.style.display = "none";
+                ordersTable.style.display = "none";
+                emptyState.style.display = "block";
+            };
+
+            const showTable = () => {
+                loadingState.style.display = "none";
+                ordersTable.style.display = "table";
+                emptyState.style.display = "none";
+            };
+
+            // Event Listeners for Filters
+            searchInput.addEventListener("input", renderOrders);
+            statusFilter.addEventListener("change", renderOrders);
+            refreshBtn.addEventListener("click", fetchDashboardData);
+
+            // Initialize fetch
+            fetchDashboardData();
+        });
+    </script>
+</body>
+</html>
