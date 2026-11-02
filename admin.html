@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UC Store Admin Dashboard</title>
+    <title>PUBG Store | Admin Dashboard</title>
     <!-- Google Fonts (Poppins) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +15,9 @@
             --bg-primary: #07080a;
             --bg-secondary: #0f1115;
             --bg-tertiary: #171a21;
-            --accent-green: #00ff66;
-            --accent-yellow: #ffcc00;
-            --accent-red: #ff3333;
+            --accent-green: #22c55e;
+            --accent-yellow: #f5c518;
+            --accent-red: #ef4444;
             --text-white: #ffffff;
             --text-muted: #8e959e;
             --border-color: rgba(255, 255, 255, 0.06);
@@ -257,6 +257,24 @@
             border-bottom: 1px solid var(--border-color);
         }
 
+        .local-note {
+            margin: 16px 24px 0;
+            padding: 13px 16px;
+            border-radius: 8px;
+            font-size: 0.83rem;
+            line-height: 1.6;
+            color: #fde68a;
+            background: rgba(245, 197, 24, 0.08);
+            border: 1px solid rgba(245, 197, 24, 0.25);
+        }
+
+        .local-note code {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -330,16 +348,16 @@
             border: 1px solid rgba(255, 204, 0, 0.2);
         }
 
-        .status-completed {
-            background-color: rgba(0, 255, 102, 0.1);
+        .status-verified {
+            background-color: rgba(34, 197, 94, 0.1);
             color: var(--accent-green);
-            border: 1px solid rgba(0, 255, 102, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
-        .status-cancelled {
-            background-color: rgba(255, 51, 51, 0.1);
+        .status-rejected {
+            background-color: rgba(239, 68, 68, 0.1);
             color: var(--accent-red);
-            border: 1px solid rgba(255, 51, 51, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         /* Action buttons in table */
@@ -440,17 +458,25 @@
 
     <!-- Simple Password Authentication Check before UI rendering -->
     <script>
-        // Set your administrator password here
+        // Set your administrator password here.
+        // NOTE: this is a UI gate only — it is visible in the page source and is NOT
+        // real security. Real protection requires the server.js backend plus a login.
         const ADMIN_PASSWORD = "admin"; 
         
         let authenticated = localStorage.getItem("uc_store_admin_auth") === "true";
         if (!authenticated) {
-            const password = prompt("Enter Admin Access Password:");
+            let password = null;
+            try {
+                password = prompt("Enter Admin Access Password:");
+            } catch (e) {
+                // Some embedded browsers block prompt(); treat as not provided.
+                password = null;
+            }
             if (password === ADMIN_PASSWORD) {
                 localStorage.setItem("uc_store_admin_auth", "true");
             } else {
                 alert("Access Denied! Incorrect Password.");
-                window.location.href = "/";
+                window.location.href = "index.html";
             }
         }
     </script>
@@ -460,7 +486,7 @@
         <div class="header-container">
             <div class="admin-logo">
                 <i class="fa-solid fa-gamepad logo-icon"></i>
-                <span>UC Store</span>
+                <span>PUBG Store</span>
                 <span class="badge-admin">Admin Dashboard</span>
             </div>
             <button class="logout-btn" id="logout-btn">
@@ -495,13 +521,13 @@
                 </div>
             </div>
 
-            <!-- Completed Orders -->
+            <!-- Verified Orders -->
             <div class="metric-card">
                 <div class="metric-icon-wrapper green-icon">
                     <i class="fa-solid fa-circle-check"></i>
                 </div>
                 <div class="metric-info">
-                    <h3>Completed Orders</h3>
+                    <h3>Verified Orders</h3>
                     <div class="metric-value" id="stat-completed-orders">-</div>
                 </div>
             </div>
@@ -531,8 +557,8 @@
                     <select class="select-filter" id="filter-status">
                         <option value="All">All Statuses</option>
                         <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Cancelled">Cancelled</option>
+                        <option value="Verified">Verified</option>
+                        <option value="Rejected">Rejected</option>
                     </select>
                 </div>
 
@@ -542,9 +568,14 @@
             </div>
         </div>
 
-        <!-- Orders Table Card -->
-        <div class="table-card">
-            <div class="table-header-title">Incoming Orders Queue</div>
+        <!-- Orders Table Card -->            <div class="table-card">
+                <div class="table-header-title">Incoming Orders Queue</div>
+                <div class="local-note" id="local-note" style="display: none;">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Static hosting mode: showing orders saved in this browser only. Connect a backend
+                    (<code>node server.js</code>) and set <code>API_BASE</code> in admin.html to see all customer orders.
+                    Customers always send their order to WhatsApp, so no order is lost.
+                </div>
 
             <div class="table-responsive">
                 <!-- Loader State -->
@@ -608,76 +639,157 @@
             // -------------------------------------------------------------
             logoutBtn.addEventListener("click", () => {
                 localStorage.removeItem("uc_store_admin_auth");
-                window.location.href = "/";
+                window.location.href = "index.html";
             });
 
             // -------------------------------------------------------------
             // Data Loading & API Calls
             // -------------------------------------------------------------
+            const LOCAL_KEY = "pubg_store_orders_v1";
+            const API_BASE = ""; // set to your server origin to use server.js API
+
+            const escapeHtml = (s) => String(s)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+            const escapeJs = (s) => String(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+            window.escapeHtml = escapeHtml;
+            window.escapeJs = escapeJs;
+
+            const readLocalOrders = () => {
+                try {
+                    return JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
+                } catch (e) {
+                    return [];
+                }
+            };
+
+            // Normalise an order from either the API or browser storage
+            const normalize = (o) => ({
+                displayId: o.displayId || o.orderId || `#${o.id}`,
+                id: o.id,
+                player_id: o.player_id || o.playerId || "",
+                uc_amount: o.uc_amount || o.uc || 0,
+                price: o.price || o.amount || 0,
+                payment_method: o.payment_method || o.paymentMethod || "JazzCash",
+                status: o.status || "Pending",
+                created_at: o.created_at || o.createdAt || new Date().toISOString()
+            });
+
+            const applyStats = (orders) => {
+                const total = orders.length;
+                const pending = orders.filter((o) => o.status === "Pending").length;
+                const verified = orders.filter((o) => o.status === "Verified").length;
+                const revenue = orders
+                    .filter((o) => o.status === "Verified")
+                    .reduce((sum, o) => sum + Number(o.price || 0), 0);
+                statTotal.textContent = total;
+                statPending.textContent = pending;
+                statCompleted.textContent = verified;
+                statRevenue.textContent = `Rs. ${revenue.toLocaleString()}`;
+            };
+
             const fetchDashboardData = () => {
                 showLoading();
-                
-                // 1. Fetch Stats metrics
-                fetch("/api/stats")
-                    .then(res => res.json())
-                    .then(stats => {
+
+                if (!API_BASE) {
+                    // Static hosting: show orders saved on this browser, clearly labelled.
+                    ordersData = readLocalOrders().map(normalize);
+                    applyStats(ordersData);
+                    renderOrders(true);
+                    return;
+                }
+
+                fetch(API_BASE + "/api/stats")
+                    .then((res) => {
+                        if (!res.ok) throw new Error("stats unavailable");
+                        return res.json();
+                    })
+                    .then((stats) => {
                         statTotal.textContent = stats.totalOrders;
                         statPending.textContent = stats.pendingOrders;
                         statCompleted.textContent = stats.completedOrders;
-                        statRevenue.textContent = `Rs. ${parseInt(stats.totalRevenue).toLocaleString()}`;
+                        statRevenue.textContent = `Rs. ${parseInt(stats.totalRevenue, 10).toLocaleString()}`;
                     })
-                    .catch(err => console.error("Error loading stats:", err));
+                    .catch((err) => console.error("Error loading stats:", err));
 
-                // 2. Fetch Orders Queue
-                fetch("/api/orders")
-                    .then(res => res.json())
-                    .then(data => {
-                        ordersData = data;
-                        renderOrders();
+                fetch(API_BASE + "/api/orders")
+                    .then((res) => {
+                        if (!res.ok) throw new Error("orders unavailable");
+                        return res.json();
                     })
-                    .catch(err => {
+                    .then((data) => {
+                        ordersData = (Array.isArray(data) ? data : []).map(normalize);
+                        renderOrders(false);
+                    })
+                    .catch((err) => {
                         console.error("Error loading orders:", err);
-                        showEmpty();
+                        ordersData = readLocalOrders().map(normalize);
+                        applyStats(ordersData);
+                        renderOrders(true);
                     });
             };
 
             // Update order status API call
-            window.updateStatus = (orderId, newStatus) => {
-                const confirmChange = confirm(`Are you sure you want to mark Order #${orderId} as ${newStatus}?`);
+            window.updateStatus = (displayId, newStatus) => {
+                const confirmChange = confirm(`Are you sure you want to mark Order ${displayId} as ${newStatus}?`);
                 if (!confirmChange) return;
 
-                fetch(`/api/orders/${orderId}`, {
+                const localOrders = readLocalOrders();
+                const localIndex = localOrders.findIndex(
+                    (o) => (o.orderId || `#${o.id}`) === displayId
+                );
+
+                const applyLocal = () => {
+                    if (localIndex > -1) {
+                        localOrders[localIndex].status = newStatus;
+                        localStorage.setItem(LOCAL_KEY, JSON.stringify(localOrders));
+                    }
+                    ordersData = localOrders.map(normalize);
+                    applyStats(ordersData);
+                    renderOrders(true);
+                };
+
+                if (!API_BASE || localIndex > -1) {
+                    applyLocal();
+                    return;
+                }
+
+                fetch(`${API_BASE}/api/orders/${encodeURIComponent(displayId)}`, {
                     method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ status: newStatus })
                 })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.success) {
-                        // Reload dashboard numbers & queue
-                        fetchDashboardData();
-                    } else {
-                        alert("Failed to update status: " + res.error);
-                    }
-                })
-                .catch(err => {
-                    console.error("Error updating order status:", err);
-                    alert("Network error updating status.");
-                });
+                    .then((res) => {
+                        if (!res.ok) throw new Error("bad status");
+                        return res.json();
+                    })
+                    .then((res) => {
+                        if (res.success) {
+                            fetchDashboardData();
+                        } else {
+                            alert("Failed to update status: " + (res.error || "unknown error"));
+                        }
+                    })
+                    .catch((err) => {
+                        console.error("Error updating order status:", err);
+                        alert("Network error updating status.");
+                    });
             };
 
             // -------------------------------------------------------------
             // Render UI helper functions
             // -------------------------------------------------------------
-            const renderOrders = () => {
+            const renderOrders = (isLocal) => {
                 const searchQuery = searchInput.value.toLowerCase().trim();
                 const selectedStatus = statusFilter.value;
 
                 // Filter ordersData based on inputs
                 const filteredOrders = ordersData.filter(order => {
-                    const matchesSearch = order.player_id.toLowerCase().includes(searchQuery);
+                    const matchesSearch = String(order.player_id).toLowerCase().includes(searchQuery) ||
+                        String(order.displayId).toLowerCase().includes(searchQuery);
                     const matchesStatus = (selectedStatus === "All" || order.status === selectedStatus);
                     return matchesSearch && matchesStatus;
                 });
@@ -685,7 +797,7 @@
                 ordersTbody.innerHTML = "";
 
                 if (filteredOrders.length === 0) {
-                    showEmpty();
+                    showEmpty(isLocal);
                     return;
                 }
 
@@ -697,28 +809,28 @@
 
                     // Status Badge Class
                     let badgeClass = "status-pending";
-                    if (order.status === "Completed") badgeClass = "status-completed";
-                    if (order.status === "Cancelled") badgeClass = "status-cancelled";
+                    if (order.status === "Verified") badgeClass = "status-verified";
+                    if (order.status === "Rejected") badgeClass = "status-rejected";
 
                     // Disabled Actions check
-                    const isCompleted = order.status === "Completed";
-                    const isCancelled = order.status === "Cancelled";
+                    const isVerified = order.status === "Verified";
+                    const isRejected = order.status === "Rejected";
 
                     row.innerHTML = `
-                        <td class="order-id">#${order.id}</td>
+                        <td class="order-id">${escapeHtml(String(order.displayId))}</td>
                         <td>${formattedDate}</td>
-                        <td class="player-id-val">${order.player_id}</td>
+                        <td class="player-id-val">${escapeHtml(String(order.player_id))}</td>
                         <td class="uc-amount-val">${order.uc_amount} UC</td>
-                        <td class="price-val">Rs. ${order.price.toLocaleString()}</td>
-                        <td>${order.payment_method}</td>
+                        <td class="price-val">Rs. ${Number(order.price).toLocaleString()}</td>
+                        <td>${escapeHtml(String(order.payment_method))}</td>
                         <td>
-                            <span class="status-badge ${badgeClass}">${order.status}</span>
+                            <span class="status-badge ${badgeClass}">${escapeHtml(String(order.status))}</span>
                         </td>
                         <td class="actions-cell">
-                            <button class="action-btn complete" title="Mark as Completed" onclick="updateStatus(${order.id}, 'Completed')" ${isCompleted ? 'disabled' : ''}>
+                            <button class="action-btn complete" title="Mark as Verified" onclick="updateStatus('${escapeJs(order.displayId)}', 'Verified')" ${isVerified ? 'disabled' : ''}>
                                 <i class="fa-solid fa-check"></i>
                             </button>
-                            <button class="action-btn cancel" title="Mark as Cancelled" onclick="updateStatus(${order.id}, 'Cancelled')" ${isCancelled ? 'disabled' : ''}>
+                            <button class="action-btn cancel" title="Mark as Rejected" onclick="updateStatus('${escapeJs(order.displayId)}', 'Rejected')" ${isRejected ? 'disabled' : ''}>
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </td>
@@ -726,7 +838,7 @@
                     ordersTbody.appendChild(row);
                 });
 
-                showTable();
+                showTable(isLocal);
             };
 
             // Visually toggle states
@@ -736,16 +848,20 @@
                 emptyState.style.display = "none";
             };
 
-            const showEmpty = () => {
+            const showEmpty = (isLocal) => {
                 loadingState.style.display = "none";
                 ordersTable.style.display = "none";
                 emptyState.style.display = "block";
+                const note = document.getElementById("local-note");
+                if (note) note.style.display = isLocal ? "block" : "none";
             };
 
-            const showTable = () => {
+            const showTable = (isLocal) => {
                 loadingState.style.display = "none";
                 ordersTable.style.display = "table";
                 emptyState.style.display = "none";
+                const note = document.getElementById("local-note");
+                if (note) note.style.display = isLocal ? "block" : "none";
             };
 
             // Event Listeners for Filters

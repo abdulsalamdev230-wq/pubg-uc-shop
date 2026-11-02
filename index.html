@@ -3,36 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Buy PUBG Mobile UC Instantly. Fast delivery, secure payment methods, and the best prices on UC packages. Simple checkout via WhatsApp.">
+    <meta name="description" content="PUBG Store | Premium Gaming Shop — Buy PUBG Mobile UC in Pakistan with JazzCash. Manual verification, WhatsApp order support and fast delivery.">
+    <meta name="theme-color" content="#0a0a0c">
     <title>PUBG Store | Premium Gaming Shop</title>
-    <!-- Google Fonts (Poppins) -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Sticky Navigation Bar -->
+    <!-- Loading animation -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+        <div class="preloader-inner">
+            <i class="fa-solid fa-gamepad preloader-icon"></i>
+            <div class="preloader-bar"><span></span></div>
+            <p>Loading store…</p>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation -->
     <header class="header" id="header">
         <div class="nav-container">
-            <a href="#" class="logo" id="logo">
+            <a href="#home" class="logo" id="logo">
                 <i class="fa-solid fa-gamepad logo-icon"></i>
-                <span> Pubg UC</span> <span class="accent-text"> hub</span>
+                <span>PUBG <span class="accent-text">Store</span></span>
             </a>
-            
+
             <nav class="nav-menu" id="nav-menu">
                 <a href="#home" class="nav-link active">Home</a>
                 <a href="#packages" class="nav-link">UC Packages</a>
                 <a href="#how-to-order" class="nav-link">How to Order</a>
                 <a href="#payments" class="nav-link">Payments</a>
+                <a href="#track" class="nav-link">Track Order</a>
+                <a href="#faq" class="nav-link">FAQ</a>
                 <a href="#contact" class="nav-link">Contact</a>
+                <a href="https://wa.me/923107817304?text=Hi!%20I%20need%20help%20with%20a%20PUBG%20UC%20order." target="_blank" rel="noopener noreferrer" class="nav-cta">
+                    <i class="fa-brands fa-whatsapp"></i> Support
+                </a>
             </nav>
 
-            <button class="hamburger" id="hamburger-menu" aria-label="Toggle Navigation Menu">
+            <button class="hamburger" id="hamburger-menu" aria-label="Toggle Navigation Menu" aria-expanded="false">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -40,386 +53,518 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-glow-1"></div>
-        <div class="hero-glow-2"></div>
-        <div class="hero-content fade-in-up">
-            <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Instant Delivery</div>
-            <h1 class="hero-title">Buy PUBG Mobile <span class="glow-green">UC</span> Instantly</h1>
-            <p class="hero-subtitle">Fast Delivery &bull; Secure Payment &bull; Best Prices</p>
-            <a href="#packages" class="btn btn-primary btn-lg pulse" id="hero-cta">
-                <i class="fa-solid fa-cart-shopping"></i> Buy UC Now
-            </a>
-        </div>
-    </section>
+    <main>
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="hero-bg" aria-hidden="true"></div>
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <div class="hero-content fade-in-up">
+                <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Instant Delivery &bull; Manual Verification</div>
+                <h1 class="hero-title">Premium <span class="gold-text">PUBG Mobile UC</span> Shop in Pakistan</h1>
+                <p class="hero-subtitle">Buy UC with JazzCash, get your order verified by the store owner, and receive UC in minutes. Safe, simple and support-backed.</p>
+                <div class="hero-actions">
+                    <a href="#packages" class="btn btn-primary btn-lg" id="hero-cta">
+                        <i class="fa-solid fa-cart-shopping"></i> Buy UC Now
+                    </a>
+                    <a href="#how-to-order" class="btn btn-ghost btn-lg">
+                        <i class="fa-solid fa-circle-question"></i> How it works
+                    </a>
+                </div>
 
-    <!-- UC Packages Section -->
-    <section class="packages-section" id="packages">
-        <div class="section-container">
-            <div class="section-header scroll-reveal">
-                <h2 class="section-title">UC Packages</h2>
-                <div class="title-underline"></div>
-                <p class="section-subtitle">Select your desired UC package from the premium cards below</p>
+                <ul class="hero-trust">
+                    <li><i class="fa-solid fa-shield-halved"></i><span><strong>Manual checks</strong>Every payment reviewed by the owner</span></li>
+                    <li><i class="fa-solid fa-clock"></i><span><strong>5–15 min</strong>Typical delivery time</span></li>
+                    <li><i class="fa-brands fa-whatsapp"></i><span><strong>WhatsApp</strong>Human support on every order</span></li>
+                </ul>
             </div>
+        </section>
 
-            <div class="packages-grid">
-                <!-- Card 1 (60 UC) -->
-                <div class="package-card scroll-reveal" data-uc="60" data-price="270">
-                    <div class="card-glow"></div>
-                    <div class="uc-badge">60 <span class="uc-unit">UC</span></div>
-                    <div class="coin-container">
-                        <i class="fa-solid fa-circle-dollar-to-slot coin-icon"></i>
-                    </div>
-                    <div class="package-details">
-                        <h3 class="package-name">Starter Pack</h3>
-                        <p class="package-price">Rs. 270</p>
-                    </div>
-                    <button class="btn btn-secondary buy-btn" data-uc="60" data-price="270">
-                        Buy Now <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+        <!-- UC Packages -->
+        <section class="section packages-section" id="packages">
+            <div class="section-container">
+                <div class="section-header scroll-reveal">
+                    <p class="section-eyebrow">Choose your pack</p>
+                    <h2 class="section-title">UC Packages</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">All prices are in Pakistani Rupees (PKR) and can be edited from a single config file.</p>
                 </div>
 
-                <!-- Card 2 (325 UC) -->
-                <div class="package-card scroll-reveal" data-uc="325" data-price="1300">
-                    <div class="card-glow"></div>
-                    <div class="uc-badge">325 <span class="uc-unit">UC</span></div>
-                    <div class="coin-container">
-                        <i class="fa-solid fa-circle-dollar-to-slot coin-icon"></i>
+                <div class="package-tools scroll-reveal">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" id="package-search" placeholder="Search UC amount or pack name…" aria-label="Search UC packages">
                     </div>
-                    <div class="package-details">
-                        <h3 class="package-name">Popular Pack</h3>
-                        <p class="package-price">Rs. 1,300</p>
-                    </div>
-                    <button class="btn btn-secondary buy-btn" data-uc="325" data-price="1300">
-                        Buy Now <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                    <div class="filter-chips" id="filter-chips" role="tablist" aria-label="Filter packages by price"></div>
                 </div>
 
-                <!-- Card 3 (660 UC) -->
-                <div class="package-card scroll-reveal featured" data-uc="660" data-price="2550">
-                    <div class="featured-badge">Best Value</div>
-                    <div class="card-glow"></div>
-                    <div class="uc-badge">660 <span class="uc-unit">UC</span></div>
-                    <div class="coin-container">
-                        <i class="fa-solid fa-circle-dollar-to-slot coin-icon"></i>
-                    </div>
-                    <div class="package-details">
-                        <h3 class="package-name">Elite Pack</h3>
-                        <p class="package-price">Rs. 2,550</p>
-                    </div>
-                    <button class="btn btn-primary buy-btn" data-uc="660" data-price="2550">
-                        Buy Now <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                <div class="packages-grid" id="packages-grid" aria-live="polite"></div>
+                <p class="packages-empty" id="packages-empty" hidden>
+                    <i class="fa-solid fa-box-open"></i> No package matches your search. Try another keyword.
+                </p>
+            </div>
+        </section>
+
+        <!-- How to Order -->
+        <section class="section how-to-order-section" id="how-to-order">
+            <div class="section-container">
+                <div class="section-header scroll-reveal">
+                    <p class="section-eyebrow">Simple checkout</p>
+                    <h2 class="section-title">How To Order</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Seven clear steps from picking a package to confirmed delivery.</p>
                 </div>
 
-                <!-- Card 4 (1800 UC) -->
-                <div class="package-card scroll-reveal" data-uc="1800" data-price="6500">
-                    <div class="card-glow"></div>
-                    <div class="uc-badge">1800 <span class="uc-unit">UC</span></div>
-                    <div class="coin-container">
-                        <i class="fa-solid fa-circle-dollar-to-slot coin-icon"></i>
+                <div class="steps-flow">
+                    <div class="step-card scroll-reveal">
+                        <div class="step-num">01</div>
+                        <div class="step-icon-wrapper"><i class="fa-solid fa-box-open step-icon"></i></div>
+                        <h3 class="step-title">Select UC package</h3>
+                        <p class="step-desc">Pick the pack that fits your budget and tap <strong>Buy Now</strong>.</p>
                     </div>
-                    <div class="package-details">
-                        <h3 class="package-name">Pro Pack</h3>
-                        <p class="package-price">Rs. 6,500</p>
+                    <div class="step-card scroll-reveal">
+                        <div class="step-num">02</div>
+                        <div class="step-icon-wrapper"><i class="fa-solid fa-id-card step-icon"></i></div>
+                        <h3 class="step-title">Enter player details</h3>
+                        <p class="step-desc">Add your PUBG Player ID and your in-game name exactly as shown in the game.</p>
                     </div>
-                    <button class="btn btn-secondary buy-btn" data-uc="1800" data-price="6500">
-                        Buy Now <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <!-- Card 5 (3850 UC) -->
-                <div class="package-card scroll-reveal" data-uc="3850" data-price="12800">
-                    <div class="card-glow"></div>
-                    <div class="uc-badge">3850 <span class="uc-unit">UC</span></div>
-                    <div class="coin-container">
-                        <i class="fa-solid fa-circle-dollar-to-slot coin-icon"></i>
+                    <div class="step-card scroll-reveal">
+                        <div class="step-num">03</div>
+                        <div class="step-icon-wrapper"><i class="fa-solid fa-wallet step-icon"></i></div>
+                        <h3 class="step-title">Pay with JazzCash</h3>
+                        <p class="step-desc">Transfer the exact amount to our JazzCash account using the instructions shown.</p>
                     </div>
-                    <div class="package-details">
-                        <h3 class="package-name">Hardcore Pack</h3>
-                        <p class="package-price">Rs. 12,800</p>
+                    <div class="step-card scroll-reveal">
+                        <div class="step-num">04</div>
+                        <div class="step-icon-wrapper"><i class="fa-solid fa-file-arrow-up step-icon"></i></div>
+                        <h3 class="step-title">Upload receipt</h3>
+                        <p class="step-desc">Attach a clear screenshot or PDF of your successful JazzCash payment.</p>
                     </div>
-                    <button class="btn btn-secondary buy-btn" data-uc="3850" data-price="12800">
-                        Buy Now <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <!-- Card 6 (8100 UC) -->
-                <div class="package-card scroll-reveal" data-uc="8100" data-price="26500">
-                    <div class="card-glow"></div>
-                    <div class="uc-badge">8100 <span class="uc-unit">UC</span></div>
-                    <div class="coin-container">
-                        <i class="fa-solid fa-circle-dollar-to-slot coin-icon"></i>
+                    <div class="step-card scroll-reveal">
+                        <div class="step-num">05</div>
+                        <div class="step-icon-wrapper"><i class="fa-solid fa-paper-plane step-icon"></i></div>
+                        <h3 class="step-title">Submit order</h3>
+                        <p class="step-desc">You get a unique Order ID and your order is saved with <strong>Pending</strong> status.</p>
                     </div>
-                    <div class="package-details">
-                        <h3 class="package-name">Legend Pack</h3>
-                        <p class="package-price">Rs. 26,500</p>
+                    <div class="step-card scroll-reveal">
+                        <div class="step-num">06</div>
+                        <div class="step-icon-wrapper"><i class="fa-brands fa-whatsapp step-icon"></i></div>
+                        <h3 class="step-title">Send on WhatsApp</h3>
+                        <p class="step-desc">WhatsApp opens with your full order message pre-filled for one-tap sending.</p>
                     </div>
-                    <button class="btn btn-secondary buy-btn" data-uc="8100" data-price="26500">
-                        Buy Now <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                    <div class="step-card scroll-reveal">
+                        <div class="step-num">07</div>
+                        <div class="step-icon-wrapper"><i class="fa-solid fa-circle-check step-icon"></i></div>
+                        <h3 class="step-title">Get verified &amp; receive UC</h3>
+                        <p class="step-desc">The owner verifies the payment manually, then your UC is delivered.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- How to Order Section -->
-    <section class="how-to-order-section" id="how-to-order">
-        <div class="section-container">
-            <div class="section-header scroll-reveal">
-                <h2 class="section-title">How To Order</h2>
-                <div class="title-underline"></div>
-                <p class="section-subtitle">Get your UC in 4 incredibly simple steps</p>
-            </div>
-
-            <div class="steps-flow">
-                <!-- Step 1 -->
-                <div class="step-card scroll-reveal">
-                    <div class="step-num">01</div>
-                    <div class="step-icon-wrapper">
-                        <i class="fa-solid fa-box-open step-icon"></i>
-                    </div>
-                    <h3 class="step-title">Select Package</h3>
-                    <p class="step-desc">Pick the UC package that suits your budget and gaming needs.</p>
+        <!-- Payments -->
+        <section class="section payments-section" id="payments">
+            <div class="section-container">
+                <div class="section-header scroll-reveal">
+                    <p class="section-eyebrow">Secure &amp; simple</p>
+                    <h2 class="section-title">Payment Instructions</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Pay only through the JazzCash account below. Verification is always done manually by the store owner.</p>
                 </div>
 
-                <!-- Step 2 -->
-                <div class="step-card scroll-reveal">
-                    <div class="step-num">02</div>
-                    <div class="step-icon-wrapper">
-                        <i class="fa-solid fa-id-card step-icon"></i>
-                    </div>
-                    <h3 class="step-title">Enter Player ID</h3>
-                    <p class="step-desc">Provide your exact PUBG Mobile Player ID in the order modal.</p>
-                </div>
+                <div class="payments-layout">
+                    <div class="payment-account-card scroll-reveal">
+                        <div class="payment-account-head">
+                            <span class="jazzcash-logo"><i class="fa-solid fa-wallet"></i></span>
+                            <div>
+                                <h3>JazzCash Account</h3>
+                                <p>Send the exact order amount to this number</p>
+                            </div>
+                        </div>
 
-                <!-- Step 3 -->
-                <div class="step-card scroll-reveal">
-                    <div class="step-num">03</div>
-                    <div class="step-icon-wrapper">
-                        <i class="fa-solid fa-credit-card step-icon"></i>
-                    </div>
-                    <h3 class="step-title">Pay Securely</h3>
-                    <p class="step-desc">Choose between Easypaisa, JazzCash, or Bank Transfer to pay.</p>
-                </div>
+                        <div class="account-field">
+                            <span class="account-label">Account title</span>
+                            <span class="account-value" id="account-title">PUBG Store</span>
+                        </div>
 
-                <!-- Step 4 -->
-                <div class="step-card scroll-reveal">
-                    <div class="step-num">04</div>
-                    <div class="step-icon-wrapper">
-                        <i class="fa-solid fa-paper-plane step-icon"></i>
-                    </div>
-                    <h3 class="step-title">Receive UC</h3>
-                    <p class="step-desc">Once verified, the UC will be transferred to your account within minutes.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                        <div class="account-field">
+                            <span class="account-label">Account number</span>
+                            <div class="account-row">
+                                <span class="account-value mono" id="account-number">03293042100</span>
+                                <button type="button" class="copy-btn" data-copy-target="account-number" id="copy-account">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
 
-    <!-- Payment Methods Section -->
-    <section class="payments-section" id="payments">
-        <div class="section-container">
-            <div class="section-header scroll-reveal">
-                <h2 class="section-title">Payment Methods</h2>
-                <div class="title-underline"></div>
-                <p class="section-subtitle">We support easy, local, and direct payment transfer options</p>
-            </div>
+                        <div class="account-field">
+                            <span class="account-label">Order amount</span>
+                            <div class="account-row">
+                                <span class="account-value mono" id="payment-amount">Shown at checkout</span>
+                                <button type="button" class="copy-btn" data-copy-target="payment-amount" id="copy-amount">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
 
-            <div class="payments-grid">
-                <!-- Easypaisa -->
-                <div class="payment-card scroll-reveal">
-                    <div class="payment-icon-wrapper easypaisa-accent">
-                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <p class="payment-note">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            Uploading a receipt does <strong>not</strong> confirm payment. Orders stay <strong>Pending</strong> until the store owner checks the JazzCash transaction.
+                        </p>
                     </div>
-                    <h3 class="payment-name">Easypaisa</h3>
-                    <p class="payment-details-text">Instant transfer from your Easypaisa Mobile Wallet. Direct transfer info will be shared on WhatsApp.</p>
-                </div>
 
-                <!-- JazzCash -->
-                <div class="payment-card scroll-reveal">
-                    <div class="payment-icon-wrapper jazzcash-accent">
-                        <i class="fa-solid fa-wallet"></i>
-                    </div>
-                    <h3 class="payment-name">JazzCash</h3>
-                    <p class="payment-details-text">Instant transfer from your JazzCash Wallet. Easy step-by-step guidance provided via WhatsApp.</p>
-                </div>
+                    <div class="payment-steps-card scroll-reveal">
+                        <h3><i class="fa-solid fa-list-ol"></i> How to pay</h3>
+                        <ol class="payment-instructions" id="payment-instructions"></ol>
 
-                <!-- Bank Transfer -->
-                <div class="payment-card scroll-reveal">
-                    <div class="payment-icon-wrapper bank-accent">
-                        <i class="fa-solid fa-building-columns"></i>
+                        <div class="payment-methods">
+                            <div class="pay-method">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                                <div><strong>JazzCash</strong><span>Primary method — shown at checkout</span></div>
+                            </div>
+                            <div class="pay-method">
+                                <i class="fa-solid fa-money-bill-transfer"></i>
+                                <div><strong>Easypaisa / Bank</strong><span>Available on request via WhatsApp</span></div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="payment-name">Bank Transfer</h3>
-                    <p class="payment-details-text">Direct transfer from any Pakistani bank account. Secure digital banking transfer with receipt submission.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-        <div class="section-container">
-            <div class="section-header scroll-reveal">
-                <h2 class="section-title">Get In Touch</h2>
-                <div class="title-underline"></div>
-                <p class="section-subtitle">Need help? Connect with our dedicated support channels instantly</p>
+        <!-- Track Order -->
+        <section class="section track-section" id="track">
+            <div class="section-container narrow">
+                <div class="section-header scroll-reveal">
+                    <p class="section-eyebrow">Order status</p>
+                    <h2 class="section-title">Track Your Order</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Enter the Order ID you received after checkout to see its current status.</p>
+                </div>
+
+                <form class="track-form scroll-reveal" id="track-form" novalidate>
+                    <input type="text" id="track-id" placeholder="e.g. PUBG-482913" aria-label="Order ID" autocomplete="off">
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Track</button>
+                </form>
+                <div class="track-result" id="track-result" hidden></div>
             </div>
+        </section>
 
-            <div class="contact-grid">
-                <!-- WhatsApp Support -->
-                <a href="https://wa.me/923107817304" target="_blank" rel="noopener noreferrer" class="contact-card whatsapp scroll-reveal" id="contact-whatsapp">
-                    <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                    <h3 class="contact-title">WhatsApp Support</h3>
-                    <p class="contact-desc">Get instant help and process order verification directly.</p>
-                    <span class="contact-action">Chat Now <i class="fa-solid fa-arrow-right-to-bracket"></i></span>
-                </a>
+        <!-- FAQ -->
+        <section class="section faq-section" id="faq">
+            <div class="section-container narrow">
+                <div class="section-header scroll-reveal">
+                    <p class="section-eyebrow">Need answers</p>
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <div class="title-underline"></div>
+                </div>
 
-                <!-- Facebook Support -->
-                <a href="https://facebook.com/ucstore.example" target="_blank" rel="noopener noreferrer" class="contact-card facebook scroll-reveal" id="contact-facebook">
-                    <div class="contact-icon"><i class="fa-brands fa-facebook-f"></i></div>
-                    <h3 class="contact-title">Facebook Page</h3>
-                    <p class="contact-desc">Follow us and reach out to us through Facebook Messenger.</p>
-                    <span class="contact-action">Visit Page <i class="fa-solid fa-arrow-right-to-bracket"></i></span>
-                </a>
-
-                <!-- Email Section -->
-                <div class="contact-card email scroll-reveal" id="contact-email">
-                    <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
-                    <h3 class="contact-title">Email Support</h3>
-                    <p class="contact-desc">Send us your queries for business or bulk order partnerships.</p>
-                    <a href="mailto: pubgmobileucstore454u@gmail.com" class="contact-action-email"></a>
+                <div class="faq-list" id="faq-list">
+                    <details class="faq-item scroll-reveal">
+                        <summary>How long does UC delivery take?<i class="fa-solid fa-chevron-down"></i></summary>
+                        <p>Usually 5–15 minutes after your JazzCash payment has been manually verified by the store owner. During busy hours it can take longer.</p>
+                    </details>
+                    <details class="faq-item scroll-reveal">
+                        <summary>Is my payment automatically verified?<i class="fa-solid fa-chevron-down"></i></summary>
+                        <p>No. This store uses <strong>manual verification</strong>. Uploading a receipt or clicking a button does not mark your order as paid. The owner checks the real JazzCash transaction first, and only then is your order marked Verified.</p>
+                    </details>
+                    <details class="faq-item scroll-reveal">
+                        <summary>What do I need to place an order?<i class="fa-solid fa-chevron-down"></i></summary>
+                        <p>Your PUBG Mobile Player ID, your in-game name, a JazzCash account for payment, and a screenshot or PDF of the payment receipt.</p>
+                    </details>
+                    <details class="faq-item scroll-reveal">
+                        <summary>What happens if I enter the wrong Player ID?<i class="fa-solid fa-chevron-down"></i></summary>
+                        <p>UC is sent to whatever Player ID you provide. Always copy it directly from your PUBG profile. The store cannot recover UC sent to an incorrect ID.</p>
+                    </details>
+                    <details class="faq-item scroll-reveal">
+                        <summary>How do I know my order is confirmed?<i class="fa-solid fa-chevron-down"></i></summary>
+                        <p>Your order starts as <strong>Pending</strong>, becomes <strong>Verified</strong> after the owner confirms the payment, and then UC is delivered. You can check any time with your Order ID in the Track Order section.</p>
+                    </details>
+                    <details class="faq-item scroll-reveal">
+                        <summary>Can I get a refund?<i class="fa-solid fa-chevron-down"></i></summary>
+                        <p>Because UC is a digital in-game currency, purchases are final once delivered. Refunds are only considered when the store fails to deliver the purchased UC.</p>
+                    </details>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Support -->
+        <section class="section contact-section" id="contact">
+            <div class="section-container">
+                <div class="section-header scroll-reveal">
+                    <p class="section-eyebrow">We reply fast</p>
+                    <h2 class="section-title">Customer Support</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Questions about an order, payment or delivery? Reach us directly.</p>
+                </div>
+
+                <div class="contact-grid">
+                    <a href="https://wa.me/923107817304?text=Hi!%20I%20need%20help%20with%20a%20PUBG%20UC%20order." target="_blank" rel="noopener noreferrer" class="contact-card whatsapp scroll-reveal" id="contact-whatsapp">
+                        <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                        <h3 class="contact-title">WhatsApp Support</h3>
+                        <p class="contact-desc">Order help, payment questions and delivery updates — fastest reply.</p>
+                        <span class="contact-action">Chat Now <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://wa.me/923107817304?text=Hi!%20I%20have%20a%20question%20about%20a%20UC%20package." target="_blank" rel="noopener noreferrer" class="contact-card order scroll-reveal" id="contact-order">
+                        <div class="contact-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <h3 class="contact-title">Order Assistance</h3>
+                        <p class="contact-desc">Need a package recommendation or a custom UC amount? Ask us.</p>
+                        <span class="contact-action">Start Order <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="mailto:pubgmobileucstore454u@gmail.com" class="contact-card email scroll-reveal" id="contact-email">
+                        <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
+                        <h3 class="contact-title">Email Support</h3>
+                        <p class="contact-desc">For bulk orders, partnerships or business enquiries.</p>
+                        <span class="contact-action">Send Email <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <p class="copyright-text">&copy; 2026 <span class="glow-text">UC Store</span>. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#" class="footer-link" id="open-privacy">Privacy Policy</a>
-                <a href="#" class="footer-link" id="open-terms">Terms & Conditions</a>
+            <div class="footer-brand">
+                <a href="#home" class="logo"><i class="fa-solid fa-gamepad logo-icon"></i> PUBG <span class="accent-text">Store</span></a>
+                <p>Premium Gaming Shop for PUBG Mobile UC in Pakistan. Manual payment verification, WhatsApp order support and fast delivery.</p>
             </div>
+
+            <div class="footer-col">
+                <h4>Store</h4>
+                <a href="#packages" class="footer-link">UC Packages</a>
+                <a href="#how-to-order" class="footer-link">How to Order</a>
+                <a href="#track" class="footer-link">Track Order</a>
+                <a href="#faq" class="footer-link">FAQ</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Payments</h4>
+                <a href="#payments" class="footer-link">Payment Instructions</a>
+                <a href="#payments" class="footer-link">JazzCash Account</a>
+                <a href="https://wa.me/923107817304" target="_blank" rel="noopener noreferrer" class="footer-link">WhatsApp Support</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#" class="footer-link" id="open-privacy">Privacy Policy</a>
+                <a href="#" class="footer-link" id="open-terms">Terms &amp; Conditions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="copyright-text">&copy; 2026 <span class="gold-text">PUBG Store | Premium Gaming Shop</span>. All rights reserved.</p>
+            <p class="footer-note">Payments are verified manually. We are not affiliated with Tencent or Krafton.</p>
         </div>
     </footer>
 
-    <!-- Scroll-to-Top Button -->
+    <!-- Floating WhatsApp -->
+    <a class="whatsapp-float" href="https://wa.me/923107817304?text=Hi!%20I%20need%20help%20with%20a%20PUBG%20UC%20order." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="whatsapp-float-label">Chat with us</span>
+    </a>
+
+    <!-- Scroll to top -->
     <button class="scroll-to-top" id="scroll-to-top-btn" aria-label="Scroll to Top">
         <i class="fa-solid fa-angle-up"></i>
     </button>
 
-    <!-- Interactive Checkout Modal -->
-    <div class="modal-overlay" id="checkout-modal">
-        <div class="modal-box">
-            <button class="modal-close" id="close-checkout" aria-label="Close Order Modal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <!-- Checkout modal -->
+    <div class="modal-overlay" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+        <div class="modal-box checkout-box">
+            <button class="modal-close" id="close-checkout" aria-label="Close Order Modal"><i class="fa-solid fa-xmark"></i></button>
+
             <div class="modal-header">
                 <i class="fa-solid fa-gamepad modal-title-icon"></i>
-                <h2>Complete Your Order</h2>
-            </div>
-            
-            <div class="modal-selected-package">
-                <div class="package-summary-label">Selected Package:</div>
-                <div class="package-summary-value" id="selected-package-summary">660 UC - Rs. 2,550</div>
+                <h2 id="checkout-title">Checkout</h2>
             </div>
 
-            <form class="modal-form" id="checkout-form">
-                <div class="form-group">
-                    <label for="player-id"><i class="fa-solid fa-id-card"></i> PUBG Player ID <span class="required">*</span></label>
-                    <input type="text" id="player-id" placeholder="e.g., 5123456789" required autocomplete="off">
-                    <p class="form-error" id="player-id-error">Please enter a valid PUBG Player ID (8-10 digit numbers).</p>
-                    <p class="form-help">Ensure your Player ID is exactly as shown in your PUBG profile.</p>
-                </div>
+            <!-- Stepper -->
+            <ol class="checkout-steps" id="checkout-steps">
+                <li data-step="1" class="active"><span>1</span>Package</li>
+                <li data-step="2"><span>2</span>Details</li>
+                <li data-step="3"><span>3</span>Payment</li>
+                <li data-step="4"><span>4</span>Receipt</li>
+                <li data-step="5"><span>5</span>Confirm</li>
+            </ol>
 
-                <div class="form-group">
-                    <label><i class="fa-solid fa-wallet"></i> Choose Payment Method <span class="required">*</span></label>
-                    <div class="payment-options">
-                        <label class="pay-option">
-                            <input type="radio" name="payment-method" value="Easypaisa" checked>
-                            <span class="pay-option-custom">
-                                <i class="fa-solid fa-mobile-screen pay-icon"></i>
-                                <span>Easypaisa</span>
-                            </span>
-                        </label>
-                        <label class="pay-option">
-                            <input type="radio" name="payment-method" value="JazzCash">
-                            <span class="pay-option-custom">
-                                <i class="fa-solid fa-wallet pay-icon"></i>
-                                <span>JazzCash</span>
-                            </span>
-                        </label>
-                        <label class="pay-option">
-                            <input type="radio" name="payment-method" value="Bank Transfer">
-                            <span class="pay-option-custom">
-                                <i class="fa-solid fa-building-columns pay-icon"></i>
-                                <span>Bank Transfer</span>
-                            </span>
-                        </label>
+            <form class="checkout-form" id="checkout-form" novalidate>
+                <!-- Step 1 -->
+                <section class="checkout-panel active" data-panel="1">
+                    <div class="order-summary">
+                        <div class="order-summary-row">
+                            <span>Selected package</span>
+                            <strong id="selected-package-summary">—</strong>
+                        </div>
+                        <div class="order-summary-row total">
+                            <span>Total amount</span>
+                            <strong id="selected-package-total">—</strong>
+                        </div>
                     </div>
-                </div>
+                    <p class="form-help"><i class="fa-solid fa-circle-info"></i> Confirm your package before continuing. You can change it any time from the package list.</p>
+                </section>
 
-                <button type="submit" class="btn btn-primary btn-block" id="modal-submit-btn">
-                    <i class="fa-brands fa-whatsapp"></i> Order on WhatsApp
-                </button>
+                <!-- Step 2 -->
+                <section class="checkout-panel" data-panel="2">
+                    <div class="form-group">
+                        <label for="customer-name"><i class="fa-solid fa-user"></i> Your Name <span class="required">*</span></label>
+                        <input type="text" id="customer-name" placeholder="e.g. Ahmed Raza" autocomplete="name">
+                        <p class="form-error" id="customer-name-error">Please enter your name (2 characters or more).</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="player-id"><i class="fa-solid fa-id-card"></i> PUBG Player ID <span class="required">*</span></label>
+                        <input type="text" id="player-id" inputmode="numeric" placeholder="e.g. 5123456789" autocomplete="off">
+                        <p class="form-error" id="player-id-error">Enter a valid Player ID (8–12 digits).</p>
+                        <p class="form-help">Copy it exactly from your PUBG profile. UC is sent to this ID only.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="player-name"><i class="fa-solid fa-signature"></i> PUBG In-Game Name <span class="required">*</span></label>
+                        <input type="text" id="player-name" placeholder="e.g. SilentHunter" autocomplete="off">
+                        <p class="form-error" id="player-name-error">Please enter your in-game name (2 characters or more).</p>
+                    </div>
+                </section>
+
+                <!-- Step 3 -->
+                <section class="checkout-panel" data-panel="3">
+                    <div class="pay-box">
+                        <div class="pay-box-head">
+                            <span class="jazzcash-logo"><i class="fa-solid fa-wallet"></i></span>
+                            <div>
+                                <h3>Pay with JazzCash</h3>
+                                <p>Transfer the exact amount below</p>
+                            </div>
+                        </div>
+
+                        <div class="account-field">
+                            <span class="account-label">Account number</span>
+                            <div class="account-row">
+                                <span class="account-value mono" id="checkout-account-number">03293042100</span>
+                                <button type="button" class="copy-btn" data-copy-target="checkout-account-number"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="account-field">
+                            <span class="account-label">Exact amount to send</span>
+                            <div class="account-row">
+                                <span class="account-value mono" id="checkout-amount">—</span>
+                                <button type="button" class="copy-btn" data-copy-target="checkout-amount"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </div>
+                        </div>
+
+                        <ol class="payment-instructions compact" id="checkout-instructions"></ol>
+
+                        <label class="confirm-check">
+                            <input type="checkbox" id="confirm-payment-read">
+                            <span>I have read the payment instructions and will send the <strong>exact amount</strong>.</span>
+                        </label>
+                        <p class="form-error" id="confirm-payment-error">Please confirm you read the payment instructions.</p>
+                    </div>
+                </section>
+
+                <!-- Step 4 -->
+                <section class="checkout-panel" data-panel="4">
+                    <div class="form-group">
+                        <label for="receipt-file"><i class="fa-solid fa-file-arrow-up"></i> Payment Receipt <span class="required">*</span></label>
+                        <label class="file-drop" for="receipt-file" id="receipt-drop">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <strong>Tap to upload your receipt</strong>
+                            <span id="receipt-rules">JPG, PNG, WEBP or PDF, max 5 MB</span>
+                        </label>
+                        <input type="file" id="receipt-file" accept="image/jpeg,image/png,image/webp,application/pdf" class="visually-hidden">
+                        <p class="form-error" id="receipt-error">Please attach your payment receipt.</p>
+
+                        <div class="file-preview" id="receipt-preview" hidden>
+                            <i class="fa-solid fa-file-circle-check"></i>
+                            <div class="file-meta">
+                                <strong id="receipt-name">receipt.jpg</strong>
+                                <span id="receipt-size">0 KB</span>
+                            </div>
+                            <button type="button" class="file-remove" id="receipt-remove" aria-label="Remove receipt"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <p class="form-help"><i class="fa-solid fa-lock"></i> Your receipt is used only to verify your JazzCash payment. It is never sold or shared.</p>
+                    </div>
+                </section>
+
+                <!-- Step 5 -->
+                <section class="checkout-panel" data-panel="5">
+                    <div class="review-card" id="review-card"></div>
+                    <p class="payment-note">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Your order will be saved as <strong>Pending</strong>. It is only marked <strong>Verified</strong> after the store owner confirms your JazzCash payment.
+                    </p>
+                </section>
+
+                <!-- Success -->
+                <section class="checkout-panel" data-panel="6">
+                    <div class="success-box">
+                        <i class="fa-solid fa-circle-check success-icon"></i>
+                        <h3>Order submitted</h3>
+                        <p>Your Order ID is</p>
+                        <div class="order-id-box"><span id="generated-order-id">—</span></div>
+                        <p class="status-line">Status: <span class="status-badge pending">Pending verification</span></p>
+                        <p class="form-help">Press the button below to send your order details on WhatsApp, then attach your receipt there too.</p>
+                        <a class="btn btn-whatsapp btn-block" id="whatsapp-order-link" href="#" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-whatsapp"></i> Send Order on WhatsApp
+                        </a>
+                        <button type="button" class="btn btn-ghost btn-block" id="copy-order-id"><i class="fa-regular fa-copy"></i> Copy Order ID</button>
+                        <button type="button" class="btn btn-primary btn-block" id="finish-order">Done</button>
+                    </div>
+                </section>
+
+                <!-- Nav buttons -->
+                <div class="checkout-nav" id="checkout-nav">
+                    <button type="button" class="btn btn-ghost" id="checkout-back"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn btn-primary" id="checkout-next">Next <i class="fa-solid fa-arrow-right"></i></button>
+                    <button type="submit" class="btn btn-primary" id="checkout-submit" hidden><i class="fa-solid fa-paper-plane"></i> Submit Order</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <!-- Privacy Policy Modal -->
-    <div class="modal-overlay modal-legal" id="privacy-modal">
+    <!-- Privacy modal -->
+    <div class="modal-overlay modal-legal" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
         <div class="modal-box legal-box">
-            <button class="modal-close close-legal" id="close-privacy-modal" aria-label="Close Privacy Modal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="modal-header">
-                <h2>Privacy Policy</h2>
-            </div>
+            <button class="modal-close close-legal" id="close-privacy-modal" aria-label="Close Privacy Modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header"><h2 id="privacy-title">Privacy Policy</h2></div>
             <div class="legal-content">
-                <p>Welcome to UC Store. Your privacy is critical to us. Since we operate directly through personal communication pathways (WhatsApp), we prioritize your confidentiality.</p>
+                <p>Welcome to PUBG Store. Your privacy matters to us. We work directly through WhatsApp, so we only collect what is needed to complete your order.</p>
                 <h3>1. Information We Collect</h3>
-                <p>We do not store your user accounts or passwords on our servers. The only details we ask for are your PUBG Player ID (to transfer UC to your game account) and your payment transaction receipt (to verify payments).</p>
-                <h3>2. How We Use Information</h3>
-                <p>Your Player ID is used solely for the fulfillment of the UC package purchased. We do not sell, trade, or transfer your Player ID or receipt information to any third parties.</p>
-                <h3>3. Security</h3>
-                <p>Transactions are manual, direct, and secured through top-tier local service providers (Easypaisa, JazzCash, and direct Bank Transfer verification). We recommend never sharing your main game passwords or personal logins.</p>
-                <h3>4. Contact Us</h3>
-                <p>If you have any questions about this privacy policy, please contact us on WhatsApp.</p>
+                <p>We ask for your name, PUBG Player ID, in-game name and your JazzCash payment receipt. We do not collect passwords or payment card details, and we never ask for your PUBG login.</p>
+                <h3>2. How We Use It</h3>
+                <p>Your Player ID is used only to deliver the UC you bought. Your receipt is used only to verify that the JazzCash payment really happened. Nothing is sold, rented or shared for marketing.</p>
+                <h3>3. Payments</h3>
+                <p>All payments are verified manually by the store owner. Uploading a receipt does not automatically confirm payment, and no order is marked as paid without a checked JazzCash transaction.</p>
+                <h3>4. Contact</h3>
+                <p>Questions about your data? Message us on WhatsApp and we will delete or correct anything you ask us to.</p>
             </div>
         </div>
     </div>
 
-    <!-- Terms and Conditions Modal -->
-    <div class="modal-overlay modal-legal" id="terms-modal">
+    <!-- Terms modal -->
+    <div class="modal-overlay modal-legal" id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-title">
         <div class="modal-box legal-box">
-            <button class="modal-close close-legal" id="close-terms-modal" aria-label="Close Terms Modal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="modal-header">
-                <h2>Terms & Conditions</h2>
-            </div>
+            <button class="modal-close close-legal" id="close-terms-modal" aria-label="Close Terms Modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header"><h2 id="terms-title">Terms &amp; Conditions</h2></div>
             <div class="legal-content">
-                <p>By purchasing from UC Store, you agree to these Terms & Conditions. Please read them carefully.</p>
-                <h3>1. Account Verification</h3>
-                <p>It is the buyer's absolute responsibility to provide the correct PUBG Mobile Player ID. UC Store holds no liability for UC sent to incorrect player IDs provided by the buyer.</p>
+                <p>By purchasing from PUBG Store you agree to these terms. Please read them carefully.</p>
+                <h3>1. Correct Player Details</h3>
+                <p>It is your responsibility to provide the correct PUBG Mobile Player ID and in-game name. We are not liable for UC delivered to details you entered incorrectly.</p>
                 <h3>2. Payment Verification</h3>
-                <p>UC will only be transferred after full confirmation of the payment receipt. Spoofed or fake transaction screenshots will lead to instant cancellation and blocking of the customer's phone number from future services.</p>
+                <p>UC is delivered only after the store owner confirms the real JazzCash transaction. Fake or edited screenshots lead to cancellation of the order.</p>
                 <h3>3. Delivery Time</h3>
-                <p>Standard delivery is completed within 5-15 minutes of payment verification. In cases of server downtime or system updates, delivery may take up to 2 hours.</p>
+                <p>Standard delivery is 5–15 minutes after payment verification. During server downtime or busy periods it may take longer.</p>
                 <h3>4. Refunds</h3>
-                <p>Due to the nature of digital in-game currency, all purchases are final. No refunds or exchanges are permitted once the UC has been sent to the designated PUBG Player ID.</p>
+                <p>UC is a digital currency, so all sales are final once delivered. Refunds apply only when the store fails to deliver the UC you paid for.</p>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK Compat -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <!-- Toasts -->
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
-    <!-- Custom Script -->
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-=
